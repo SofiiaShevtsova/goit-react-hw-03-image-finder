@@ -1,18 +1,38 @@
+import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import StyleList from 'styles/styles';
 const { ModalBackdrop, ModalBox } = StyleList;
 
 const modalRoot = document.querySelector('#modal-root');
 
-const Modal = props => {
-  return createPortal(
-    <ModalBackdrop onClick={props.onClick}>
-      <ModalBox>
-        <img src={props.image.largeImageURL} alt={props.image.tags} />
-      </ModalBox>
-    </ModalBackdrop>,
-    modalRoot
-  );
-};
+class Modal extends Component {
+  componentDidMount() {
+    document.addEventListener('keydown', this.props.closeModal);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.props.closeModal);
+  }
+
+  render() {
+    return createPortal(
+      <ModalBackdrop onClick={this.props.closeModal}>
+        <ModalBox>
+          <img
+            src={this.props.image.largeImageURL}
+            alt={this.props.image.tags}
+          />
+        </ModalBox>
+      </ModalBackdrop>,
+      modalRoot
+    );
+  }
+}
+
+Modal.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  image: PropTypes.shape({largeImageURL: PropTypes.string.isRequired, tags: PropTypes.string.isRequired})
+}
 
 export default Modal;

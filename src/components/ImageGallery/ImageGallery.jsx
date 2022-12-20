@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Component } from 'react';
 import Modal from 'components/Modal/Modal';
-import Button from 'components/Button/Button';
 import StyleList from 'styles/styles';
 
 const { ListOfImagesStyle } = StyleList;
@@ -12,7 +12,17 @@ class ImageGallery extends Component {
     modalImage: null,
   };
   componentDidMount() {
+    this.setState({ imageList: this.props.imageList });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevState.imageList === this.state.imageList &&
+      prevProps.imageList !== this.props.imageList
+    ) {
       this.setState({ imageList: this.props.imageList });
+      return;
+    }
   }
 
   onImageClick = event =>
@@ -22,8 +32,8 @@ class ImageGallery extends Component {
       ),
     });
 
-  onBackdropClick = event => {
-    if (event.target === event.currentTarget) {
+  closeModal = event => {
+    if (event.target === event.currentTarget || event.key === 'Escape') {
       this.setState({ modalImage: null });
     }
   };
@@ -32,7 +42,7 @@ class ImageGallery extends Component {
     return (
       <>
         {this.state.modalImage && (
-          <Modal image={this.state.modalImage} onClick={this.onBackdropClick} />
+          <Modal image={this.state.modalImage} closeModal={this.closeModal} />
         )}
         <ListOfImagesStyle>
           {this.state.imageList.map(image => (
@@ -43,10 +53,13 @@ class ImageGallery extends Component {
             />
           ))}
         </ListOfImagesStyle>
-        <Button />
       </>
     );
   }
+}
+
+ImageGallery.propTypes = {
+  imageList: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default ImageGallery;

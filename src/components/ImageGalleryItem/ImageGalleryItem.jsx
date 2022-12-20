@@ -1,7 +1,7 @@
 const ImageGalleryItem = props => {
-    // const {image} = props
-    return (<li>
-        <img src="#" alt="#" />
+    const {image, onClick} = props
+    return (<li onClick={onClick}>
+  <img src={image.webformatURL} alt={image.tags} width="300px"/>
     </li>)
 }
 

@@ -7,7 +7,7 @@ export const getImage = async query => {
   let nameImages = `q=${query}`;
   let page = 1;
   const options =
-    'key=31187211-d453cf6c0705ee9af6400cbd4&min_height=1200&image_type=photo&orientation=horizontal&safesearch=true&per_page=20';
+    'key=31187211-d453cf6c0705ee9af6400cbd4&min_height=1200&image_type=photo&orientation=horizontal&safesearch=true&per_page=4';
   const baseUrl = 'https://pixabay.com/api/';
 
   try {

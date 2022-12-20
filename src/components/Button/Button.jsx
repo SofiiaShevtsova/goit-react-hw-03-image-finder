@@ -1,7 +1,11 @@
+import StyleList from "styles/styles"
+
+const {BtnLoadMoreStyle}= StyleList
+
 const Button = props => {
     return (
         <div>
-            <button type="button">Load more</button>
+            <BtnLoadMoreStyle type="button">Load more</BtnLoadMoreStyle>
         </div>
     )
 }

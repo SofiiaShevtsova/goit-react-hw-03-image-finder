@@ -16,41 +16,32 @@ export class App extends Component {
   };
 
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
-    if (!this.state.loading && !prevState.loading) {
-      this.setState({ loading: true });
-    }
-    try {
-      const data = await getImage(this.state.query, this.state.page);
-      if (
-        prevState.imageList === this.state.imageList &&
-        prevState.query === this.state.query
-      ) {
-        this.setState({ imageList: [...prevState.imageList, ...data] });
-      }
-      if (
-        prevState.imageList === this.state.imageList &&
-        prevState.query !== this.state.query
-      ) {
-        this.setState({ imageList: data });
-      }
-    } catch (error) {
-      Notify.failure(
-        `Sorry, there are no images matching your search query. Please try again.`,
-        {
-          width: '500px',
-          distance: '50px',
-          fontSize: '24px',
-        }
-      );
-    } finally {
-      if (this.state.loading) {
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
+      try {
+        this.setState({ loading: true });
+
+        const data = await getImage(this.state.query, this.state.page);
+        this.setState({ imageList: [...this.state.imageList, ...data] });
+      } catch (error) {
+        Notify.failure(
+          `Sorry, there are no images matching your search query. Please try again.`,
+          {
+            width: '500px',
+            distance: '50px',
+            fontSize: '24px',
+          }
+        );
+      } finally {
         this.setState({ loading: false });
       }
     }
   };
 
   querryForFind = query => {
-    this.setState({ query: query, page: 1 });
+    this.setState({ query: query, page: 1, imageList: [] });
   };
 
   loadMore = () => {

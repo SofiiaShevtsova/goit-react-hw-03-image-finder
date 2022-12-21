@@ -25,11 +25,9 @@ class ImageGallery extends Component {
     }
   }
 
-  onImageClick = event =>
+  onImageClick = ImageBig =>
     this.setState({
-      modalImage: this.state.imageList.find(
-        image => image.webformatURL === event.target.src
-      ),
+      modalImage: ImageBig,
     });
 
   closeModal = event => {
@@ -59,7 +57,7 @@ class ImageGallery extends Component {
 }
 
 ImageGallery.propTypes = {
-  imageList: PropTypes.arrayOf(PropTypes.object)
-}
+  imageList: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default ImageGallery;

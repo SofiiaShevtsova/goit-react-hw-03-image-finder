@@ -19,10 +19,7 @@ class Modal extends Component {
     return createPortal(
       <ModalBackdrop onClick={this.props.closeModal}>
         <ModalBox>
-          <img
-            src={this.props.image.largeImageURL}
-            alt={this.props.image.tags}
-          />
+          <img src={this.props.image} alt="#" />
         </ModalBox>
       </ModalBackdrop>,
       modalRoot
@@ -32,7 +29,7 @@ class Modal extends Component {
 
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  image: PropTypes.shape({largeImageURL: PropTypes.string.isRequired, tags: PropTypes.string.isRequired})
-}
+  image: PropTypes.string.isRequired,
+};
 
 export default Modal;
